@@ -2,7 +2,8 @@
 import MediaFrame from "./MediaFrame.astro";
 
 const { project, large = false } = Astro.props;
-const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, coverPoster, accent, metrics } = project.data;
+const { title, subtitle, summary, period,  tags = [], role, type, tech, cover, coverAlt, coverPoster, accent, metrics } = project.data;
+const visibleTags = [type, ...tags];
 const href = `/projects/${project.id}`;
 ---
 
@@ -56,9 +57,12 @@ const href = `/projects/${project.id}`;
       ))}
     </div>
 
-    <span class="mt-7 inline-flex items-center gap-2 text-sm font-semibold" style={`color:${accent}`}>
-      View case study
-      <span class="transition group-hover:translate-x-1">→</span>
+<div class="absolute left-5 top-5 z-10 flex flex-wrap gap-2">
+  {visibleTags.map((tag) => (
+    <span class="rounded-full border border-white/15 bg-black/55 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+      {tag}
     </span>
+  ))}
+</div>
   </div>
 </a>
