@@ -43,8 +43,8 @@ const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, cov
       </div>
     </header>
 
-    <div class="mt-10 overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900/70">
-      <MediaFrame src={cover} alt={coverAlt} poster={coverPoster} class="max-h-[34rem] w-full object-cover" loading="eager" />
+    <div class="mt-10 aspect-video max-h-[34rem] overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900/70">
+      <MediaFrame src={cover} alt={coverAlt} poster={coverPoster} class="h-full w-full object-cover" loading="eager" />
     </div>
 
     {(metrics.length > 0 || highlights.length > 0 || links.length > 0) && (
@@ -101,7 +101,7 @@ const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, cov
         <h2 class="mb-6 text-3xl font-black tracking-tight text-white">Gallery</h2>
         <div class="grid gap-5 md:grid-cols-2">
           {gallery.map((item) => (
-            <figure class="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035]">
+            <figure class="aspect-video overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035]">
               <MediaFrame src={item.src} alt={item.alt} poster={item.poster} class="h-full w-full object-cover" loading="lazy" />
             </figure>
           ))}
