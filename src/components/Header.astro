@@ -1,0 +1,35 @@
+---
+import { profile } from "../data/profile";
+const nav = [
+  { href: "/projects", label: "Projects" },
+  { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
+];
+---
+
+<header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
+    <a href="/" class="group flex items-center gap-3" aria-label={`${profile.displayName} home`}>
+      <span class="grid size-10 place-items-center rounded-2xl border border-cyan-300/30 bg-cyan-300/10 text-sm font-black text-cyan-100 shadow-[0_0_40px_rgba(34,211,238,0.16)]">
+        PB
+      </span>
+      <span class="hidden leading-tight sm:block">
+        <span class="block text-sm font-semibold text-white">{profile.displayName}</span>
+        <span class="block text-xs text-slate-400">{profile.shortHeadline}</span>
+      </span>
+    </a>
+
+    <nav class="hidden items-center gap-7 text-sm text-slate-300 md:flex" aria-label="Primary navigation">
+      {nav.map((item) => (
+        <a class="link-underline hover:text-white" href={item.href}>{item.label}</a>
+      ))}
+    </nav>
+
+    <a
+      href={`mailto:${profile.email}`}
+      class="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
+    >
+      Email
+    </a>
+  </div>
+</header>

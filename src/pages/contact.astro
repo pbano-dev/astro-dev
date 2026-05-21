@@ -1,0 +1,43 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { profile } from "../data/profile";
+---
+
+<BaseLayout title="Contact | Pablo Bano Benito" description="Contact Pablo Bano Benito for remote software engineering roles.">
+  <section class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+    <div class="glass overflow-hidden rounded-[2.5rem]">
+      <div class="grid gap-0 lg:grid-cols-[1fr_0.75fr]">
+        <div class="p-8 sm:p-10 lg:p-14">
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">Contact</p>
+          <h1 class="mt-5 max-w-3xl text-5xl font-black tracking-[-0.07em] text-white sm:text-6xl">Let’s talk about engineering work.</h1>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+            Available for remote software engineering roles in games, interactive products, tools, simulation, internal platforms and technical product teams.
+          </p>
+
+          <div class="mt-9 flex flex-wrap gap-4">
+            <a href={`mailto:${profile.email}`} class="rounded-full bg-cyan-300 px-6 py-3 text-sm font-black text-slate-950 transition hover:bg-white">Email Pablo</a>
+            <a href={profile.cvUrl} class="rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/35">Download CV</a>
+          </div>
+        </div>
+
+        <aside class="border-t border-white/10 bg-white/[0.035] p-8 sm:p-10 lg:border-l lg:border-t-0 lg:p-12">
+          <h2 class="text-xl font-bold text-white">Details</h2>
+          <dl class="mt-6 grid gap-5 text-sm">
+            <div>
+              <dt class="text-slate-500">Email</dt>
+              <dd class="mt-1 text-white"><a class="hover:text-cyan-200" href={`mailto:${profile.email}`}>{profile.email}</a></dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Location</dt>
+              <dd class="mt-1 text-white">{profile.location}</dd>
+            </div>
+            <div>
+              <dt class="text-slate-500">Availability</dt>
+              <dd class="mt-1 text-white">{profile.availability}</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

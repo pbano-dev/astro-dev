@@ -1,0 +1,134 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --surface: #070a12;
+  --surface-soft: #0d1220;
+  --surface-card: rgba(15, 23, 42, 0.74);
+  --line: rgba(148, 163, 184, 0.16);
+  --text-soft: #aab3c5;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  background:
+    radial-gradient(circle at 8% 0%, rgba(34, 211, 238, 0.16), transparent 34rem),
+    radial-gradient(circle at 84% 14%, rgba(168, 85, 247, 0.14), transparent 32rem),
+    radial-gradient(circle at 50% 100%, rgba(16, 185, 129, 0.08), transparent 30rem),
+    var(--surface);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.34;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black, transparent 78%);
+}
+
+::selection {
+  background: rgba(34, 211, 238, 0.32);
+  color: white;
+}
+
+.content-body {
+  color: #cbd5e1;
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.content-body h2 {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  font-weight: 800;
+}
+
+.content-body h3 {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: #e2e8f0;
+  font-size: 1.25rem;
+  font-weight: 750;
+}
+
+.content-body p {
+  max-width: 72ch;
+  margin: 1rem 0;
+}
+
+.content-body ul {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+  padding: 0;
+  list-style: none;
+}
+
+.content-body li {
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.content-body li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--project-accent, #22d3ee);
+  box-shadow: 0 0 20px var(--project-accent, #22d3ee);
+}
+
+.content-body a {
+  color: #67e8f9;
+  text-decoration: underline;
+  text-decoration-color: rgba(103, 232, 249, 0.35);
+  text-underline-offset: 0.25rem;
+}
+
+.glass {
+  background: linear-gradient(180deg, rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.46));
+  border: 1px solid var(--line);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(18px);
+}
+
+.project-card-image {
+  mask-image: linear-gradient(to bottom, black 62%, rgba(0,0,0,0.75));
+}
+
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 180ms ease;
+}
+
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

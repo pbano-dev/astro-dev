@@ -1,0 +1,10 @@
+---
+const { children, tone = "default" } = Astro.props;
+const classes = tone === "accent"
+  ? "border-cyan-300/30 bg-cyan-300/10 text-cyan-100"
+  : "border-white/10 bg-white/[0.04] text-slate-300";
+---
+
+<span class={`inline-flex items-center rounded-full border px-3 py-1 text-xs font-medium ${classes}`}>
+  <slot />
+</span>

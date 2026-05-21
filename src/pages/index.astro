@@ -1,11 +1,137 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import { getCollection } from "astro:content";
+import { profile, experience, skillGroups } from "../data/profile";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const projects = (await getCollection("projects")).sort(
+  (a, b) => a.data.priority - b.data.priority
+);
+const featuredProjects = projects.filter((project) => project.data.featured);
+const heroProject = featuredProjects[0];
+const secondaryProjects = featuredProjects.slice(1, 4);
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<BaseLayout
+  title={`${profile.displayName} | ${profile.headline}`}
+  description={profile.intro}
+>
+  <section class="relative mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:py-24">
+    <div class="flex flex-col justify-center">
+      <div class="mb-6 flex flex-wrap gap-3">
+        <span class="rounded-full border border-emerald-300/30 bg-emerald-300/10 px-4 py-2 text-sm font-semibold text-emerald-100">
+          {profile.availability}
+        </span>
+        <span class="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-slate-300">
+          {profile.location}
+        </span>
+      </div>
+
+      <p class="text-sm font-bold uppercase tracking-[0.35em] text-cyan-300">{profile.shortHeadline}</p>
+      <h1 class="mt-5 max-w-4xl text-5xl font-black tracking-[-0.07em] text-white sm:text-6xl lg:text-7xl">
+        Production-minded engineering for gameplay, tools and runtime systems.
+      </h1>
+      <p class="mt-7 max-w-2xl text-lg leading-8 text-slate-300">
+        {profile.intro}
+      </p>
+
+      <div class="mt-9 flex flex-wrap gap-4">
+        <a href="/projects" class="rounded-full bg-cyan-300 px-6 py-3 text-sm font-black text-slate-950 shadow-[0_0_40px_rgba(34,211,238,0.28)] transition hover:bg-white">
+          Explore projects
+        </a>
+        <a href={profile.cvUrl} class="rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/35 hover:bg-white/[0.08]">
+          Download CV
+        </a>
+      </div>
+
+      <div class="mt-10 grid gap-3 sm:grid-cols-3">
+        {profile.stats.map((stat) => (
+          <div class="glass rounded-3xl p-4">
+            <p class="text-2xl font-black text-white">{stat.value}</p>
+            <p class="mt-1 text-xs leading-5 text-slate-400">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="absolute -inset-4 rounded-[3rem] bg-cyan-300/10 blur-3xl"></div>
+      <div class="glass relative overflow-hidden rounded-[2.5rem] p-5">
+        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+          <div class="flex gap-2">
+            <span class="size-3 rounded-full bg-red-400"></span>
+            <span class="size-3 rounded-full bg-yellow-300"></span>
+            <span class="size-3 rounded-full bg-emerald-400"></span>
+          </div>
+          <span class="text-xs text-slate-500">pbano.dev / systems</span>
+        </div>
+        <div class="grid gap-5 pt-5">
+          {profile.focus.map((item, index) => (
+            <div class="rounded-3xl border border-white/10 bg-white/[0.035] p-5">
+              <p class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">0{index + 1}</p>
+              <p class="mt-2 text-xl font-black text-white">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
+    <SectionHeading
+      eyebrow="Selected work"
+      title="Portfolio rebuilt around systems, impact and technical ownership."
+      description="The old blog-style list has been replaced by case-study cards, stronger hierarchy, metadata, calls to action and project pages designed for recruiters and technical reviewers."
+    />
+
+    {heroProject && <ProjectCard project={heroProject} large />}
+
+    <div class="mt-6 grid gap-6 lg:grid-cols-3">
+      {secondaryProjects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+    <div class="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+      <div class="glass rounded-[2rem] p-7 sm:p-8">
+        <p class="text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">Experience</p>
+        <h2 class="mt-4 text-3xl font-black tracking-tight text-white">Production Unity engineering</h2>
+        <p class="mt-4 leading-7 text-slate-400">{experience[0].description}</p>
+        <div class="mt-7 rounded-3xl border border-white/10 bg-white/[0.035] p-5">
+          <p class="text-lg font-bold text-white">{experience[0].role}</p>
+          <p class="mt-1 text-sm text-slate-400">{experience[0].company} · {experience[0].period}</p>
+        </div>
+      </div>
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        {skillGroups.map((group) => (
+          <div class="glass rounded-[2rem] p-6">
+            <h3 class="text-lg font-bold text-white">{group.title}</h3>
+            <div class="mt-4 flex flex-wrap gap-2">
+              {group.items.map((item) => (
+                <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-300">{item}</span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
+    <div class="glass rounded-[2.5rem] p-8 sm:p-10 lg:p-12">
+      <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+        <div>
+          <p class="text-xs font-bold uppercase tracking-[0.35em] text-emerald-300">Contact</p>
+          <h2 class="mt-4 text-4xl font-black tracking-tight text-white">Need a software engineer for games, tools or interactive products?</h2>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">Available for remote roles across games, simulation, technical product teams, internal platforms and interactive software.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href={`mailto:${profile.email}`} class="rounded-full bg-white px-6 py-3 text-sm font-black text-slate-950 transition hover:bg-cyan-200">Email Pablo</a>
+          <a href="/contact" class="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.08]">Contact page</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

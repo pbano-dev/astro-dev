@@ -1,0 +1,58 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import SectionHeading from "../../components/SectionHeading.astro";
+import { getCollection } from "astro:content";
+
+const projects = (await getCollection("projects")).sort(
+  (a, b) => a.data.priority - b.data.priority
+);
+const filters = ["All", ...Array.from(new Set(projects.map((project) => project.data.type)))];
+---
+
+<BaseLayout title="Projects | Pablo Bano Benito">
+  <section class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
+    <SectionHeading
+      eyebrow="Projects"
+      title="Case studies across Unity systems, gameplay, engines and rendering."
+      description="Filter by project type or open each case study for responsibilities, technical highlights, media and links."
+    />
+
+    <div class="mb-8 flex flex-wrap gap-3" role="list" aria-label="Project filters">
+      {filters.map((filter, index) => (
+        <button
+          class="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-cyan-300/40 hover:text-white data-[active=true]:border-cyan-300/60 data-[active=true]:bg-cyan-300/15 data-[active=true]:text-cyan-100"
+          data-filter={filter}
+          data-active={index === 0 ? "true" : "false"}
+          aria-pressed={index === 0 ? "true" : "false"}
+        >
+          {filter}
+        </button>
+      ))}
+    </div>
+
+    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {projects.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <script is:inline>
+    const buttons = Array.from(document.querySelectorAll('[data-filter]'));
+    const cards = Array.from(document.querySelectorAll('[data-project-card]'));
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.getAttribute('data-filter');
+        buttons.forEach((item) => {
+          const active = item === button;
+          item.setAttribute('data-active', String(active));
+          item.setAttribute('aria-pressed', String(active));
+        });
+        cards.forEach((card) => {
+          const visible = filter === 'All' || card.getAttribute('data-type') === filter;
+          card.style.display = visible ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</BaseLayout>

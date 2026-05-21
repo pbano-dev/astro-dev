@@ -1,0 +1,61 @@
+---
+const { project, large = false } = Astro.props;
+const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, accent, metrics } = project.data;
+const href = `/projects/${project.id}`;
+---
+
+<a
+  href={href}
+  data-project-card
+  data-type={type}
+  class={`group glass relative flex h-full overflow-hidden rounded-[2rem] transition duration-300 hover:-translate-y-1 hover:border-white/25 ${large ? "lg:grid lg:grid-cols-[1.1fr_0.9fr]" : "flex-col"}`}
+  style={`--project-accent:${accent}`}
+>
+  <div class={`relative overflow-hidden ${large ? "min-h-[22rem]" : "h-56"}`}>
+    <img
+      src={cover}
+      alt={coverAlt}
+      class="project-card-image h-full w-full object-cover opacity-85 saturate-[1.08] transition duration-500 group-hover:scale-[1.04] group-hover:opacity-100"
+      loading="lazy"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/10 to-transparent"></div>
+    <div class="absolute left-5 top-5 rounded-full border border-white/10 bg-black/35 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
+      {type}
+    </div>
+  </div>
+
+  <div class="flex flex-1 flex-col p-6 sm:p-7">
+    <div class="mb-5 flex items-center justify-between gap-4 text-xs uppercase tracking-[0.22em] text-slate-400">
+      <span>{period}</span>
+      <span>{role}</span>
+    </div>
+
+    <h3 class="text-2xl font-black tracking-tight text-white sm:text-3xl">{title}</h3>
+    <p class="mt-3 text-sm leading-6 text-slate-300">{subtitle}</p>
+    <p class="mt-5 text-sm leading-6 text-slate-400">{summary}</p>
+
+    {metrics.length > 0 && (
+      <div class="mt-6 grid grid-cols-2 gap-3">
+        {metrics.slice(0, 2).map((metric) => (
+          <div class="rounded-2xl border border-white/10 bg-white/[0.035] p-3">
+            <p class="text-lg font-black text-white">{metric.value}</p>
+            <p class="mt-1 text-xs text-slate-400">{metric.label}</p>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <div class="mt-6 flex flex-wrap gap-2">
+      {tech.slice(0, large ? 8 : 5).map((item) => (
+        <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-300">
+          {item}
+        </span>
+      ))}
+    </div>
+
+    <span class="mt-7 inline-flex items-center gap-2 text-sm font-semibold" style={`color:${accent}`}>
+      View case study
+      <span class="transition group-hover:translate-x-1">→</span>
+    </span>
+  </div>
+</a>
