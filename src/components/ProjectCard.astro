@@ -1,6 +1,8 @@
 ---
+import MediaFrame from "./MediaFrame.astro";
+
 const { project, large = false } = Astro.props;
-const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, accent, metrics } = project.data;
+const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, coverPoster, accent, metrics } = project.data;
 const href = `/projects/${project.id}`;
 ---
 
@@ -12,9 +14,10 @@ const href = `/projects/${project.id}`;
   style={`--project-accent:${accent}`}
 >
   <div class={`relative overflow-hidden ${large ? "min-h-[22rem]" : "h-56"}`}>
-    <img
+    <MediaFrame
       src={cover}
       alt={coverAlt}
+      poster={coverPoster}
       class="project-card-image h-full w-full object-cover opacity-85 saturate-[1.08] transition duration-500 group-hover:scale-[1.04] group-hover:opacity-100"
       loading="lazy"
     />

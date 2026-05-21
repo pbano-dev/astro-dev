@@ -18,3 +18,9 @@ This redesign turns the old WordPress/blog-style list into a focused technical p
 - Update the `site` field in `astro.config.mjs` once the final Netlify/domain URL exists.
 - Replace SVG placeholder covers with real screenshots/videos when you have better assets.
 - Review all project copy for exact factual precision before publishing publicly.
+
+## WordPress media migration update
+
+This package now includes optimized local media extracted from the public WordPress portfolio. Animated GIF/WebP previews have been converted to small autoplaying MP4 files and wired into project cards, project hero media and galleries.
+
+A new `MediaFrame.astro` component handles both images and videos. Use `coverPoster` for MP4 covers and gallery items with `type: "video"` plus `poster`.

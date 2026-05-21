@@ -1,0 +1,27 @@
+---
+const {
+  src,
+  alt = "",
+  poster,
+  class: className = "",
+  loading = "lazy",
+} = Astro.props;
+
+const isVideo = typeof src === "string" && /\.(mp4|webm)$/i.test(src);
+---
+
+{isVideo ? (
+  <video
+    src={src}
+    poster={poster}
+    class={className}
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    aria-label={alt}
+  />
+) : (
+  <img src={src} alt={alt} class={className} loading={loading} />
+)}

@@ -3,7 +3,7 @@ import { glob } from "astro/loaders";
 
 const linkSchema = z.object({
   label: z.string(),
-  href: z.string().url(),
+  href: z.string(),
 });
 
 const metricSchema = z.object({
@@ -14,6 +14,8 @@ const metricSchema = z.object({
 const galleryItemSchema = z.object({
   src: z.string(),
   alt: z.string(),
+  type: z.enum(["image", "video"]).default("image"),
+  poster: z.string().optional(),
 });
 
 const projects = defineCollection({
@@ -39,6 +41,7 @@ const projects = defineCollection({
     tech: z.array(z.string()),
     cover: z.string(),
     coverAlt: z.string().default(""),
+    coverPoster: z.string().optional(),
     accent: z.string().default("#22d3ee"),
     metrics: z.array(metricSchema).default([]),
     highlights: z.array(z.string()).default([]),

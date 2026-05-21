@@ -1,11 +1,6 @@
 # pbano-dev-portfolio
 
-Astro portfolio redesign for Pablo Bano Benito.
-
-## Requirements
-
-- Node.js `>=22.12.0`
-- npm
+Astro portfolio for Pablo Bano Benito, redesigned as a static technical portfolio with project case studies, optimized media and deploy-ready configuration.
 
 ## Local development
 
@@ -14,28 +9,41 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:4321`.
+Open <http://localhost:4321>.
 
-## Production build
+## Production check
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Content workflow
-
-Projects live in `src/content/projects/*.mdx`.
-
-Each project contains frontmatter for metadata, cards, filters, links, videos and gallery images, followed by Markdown/MDX body content for the case study.
-
-Static assets live in `public/assets/`.
-
 ## Deploy
 
-The project is static. Netlify build settings:
+The project includes `netlify.toml`:
 
-- Build command: `npm run build`
-- Publish directory: `dist`
+```toml
+[build]
+  command = "npm run build"
+  publish = "dist"
+```
 
-`netlify.toml` is included.
+## Content model
+
+Projects live in:
+
+```txt
+src/content/projects/
+```
+
+Each project is an MDX file with frontmatter validated by `src/content.config.ts`.
+
+## Media
+
+Optimized media lives in:
+
+```txt
+public/assets/projects/
+```
+
+See `ASSET_MIGRATION.md` for the WordPress media migration and optimization notes.

@@ -1,9 +1,10 @@
 ---
 import BaseLayout from "./BaseLayout.astro";
 import VideoEmbed from "../components/VideoEmbed.astro";
+import MediaFrame from "../components/MediaFrame.astro";
 
 const { project } = Astro.props;
-const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, accent, metrics, highlights, links, videoId, gallery } = project.data;
+const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, coverPoster, accent, metrics, highlights, links, videoId, gallery } = project.data;
 ---
 
 <BaseLayout title={`${title} | Pablo Bano Benito`} description={summary}>
@@ -43,7 +44,7 @@ const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, acc
     </header>
 
     <div class="mt-10 overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-900/70">
-      <img src={cover} alt={coverAlt} class="max-h-[34rem] w-full object-cover" />
+      <MediaFrame src={cover} alt={coverAlt} poster={coverPoster} class="max-h-[34rem] w-full object-cover" loading="eager" />
     </div>
 
     {(metrics.length > 0 || highlights.length > 0 || links.length > 0) && (
@@ -101,7 +102,7 @@ const { title, subtitle, summary, period, role, type, tech, cover, coverAlt, acc
         <div class="grid gap-5 md:grid-cols-2">
           {gallery.map((item) => (
             <figure class="overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.035]">
-              <img src={item.src} alt={item.alt} class="h-full w-full object-cover" loading="lazy" />
+              <MediaFrame src={item.src} alt={item.alt} poster={item.poster} class="h-full w-full object-cover" loading="lazy" />
             </figure>
           ))}
         </div>
