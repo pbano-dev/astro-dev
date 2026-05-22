@@ -1,12 +1,13 @@
 ---
 title: "SufferEngine"
-subtitle: "Custom C++ / OpenGL engine with ECS, editor tooling, resource management and rendering features."
-summary: "A custom game engine co-developed from scratch, covering engine architecture, transform hierarchy, component lifecycle, memory structures, runtime/editor integration and OpenGL rendering features."
+subtitle: "Custom C++ / OpenGL engine with ECS, task scheduling, editor tooling and resource management."
+summary: "A custom C++ engine co-developed from scratch, covering real ECS architecture, transform hierarchy, Lua scripting components, resource management, allocators / pools, editor tooling and OpenGL rendering features."
 period: "2021"
-role: "Engine / Graphics Programmer"
+role: "C++ Engine Programmer"
 type: "Engine"
 tags:
   - C++
+  - Tool
   - Graphics
 status: "Technical project"
 featured: true
@@ -15,25 +16,26 @@ tech:
   - C++
   - OpenGL
   - ECS
+  - Task scheduler
   - Dear ImGui
   - Lua
   - SoLoud
-  - GLFW
-  - GLEW
+  - Resource management
 cover: "/assets/projects/suffer-engine/lights.mp4"
 coverPoster: "/assets/projects/suffer-engine/lights-poster.webp"
 coverAlt: "SufferEngine animated lighting and editor preview"
 accent: "#a78bfa"
 metrics:
-  - value: "9 mo"
-    label: "engine development"
-  - value: "2 devs"
-    label: "custom architecture"
+  - value: "Real ECS"
+    label: "custom component model"
+  - value: "Task scheduler"
+    label: "multithreaded systems"
 highlights:
-  - "Real ECS architecture, task scheduler, transform hierarchy and Lua scripting components."
-  - "Editor functionality with hierarchy, inspector, component editing and shader controls."
-  - "Resource loading, custom memory structures, allocators / pools and runtime/editor integration."
-  - "OpenGL rendering contribution including normal mapping and lighting."
+  - "Implemented systems-level functionality across transforms, parent/child hierarchy, component lifecycle and runtime/editor integration."
+  - "Worked with a real ECS architecture, task scheduler, Lua scripting components, audio execution and resource management."
+  - "Built editor functionality with Dear ImGui: hierarchy, inspector, component editing, shader controls, lighting toggles and audio controls."
+  - "Worked on custom memory structures, allocators / pools and resource loading."
+  - "Contributed to OpenGL rendering, specifically normal mapping and lighting implementation."
 links:
   - label: "Video"
     href: "https://www.youtube.com/watch?v=orxBeejDP1Q"
@@ -53,16 +55,16 @@ gallery:
 
 ## Overview
 
-SufferEngine is a custom C++ engine developed to explore lower-level engine architecture and graphics programming beyond standard commercial engine workflows. The project combined runtime systems, editor tooling, resource management and rendering features into a cohesive architecture.
+SufferEngine is the strongest C++ systems project in the portfolio. It was not a simple rendering demo: it combined runtime architecture, an entity/component model, transform hierarchy, scripting, audio execution, resource management, editor tooling and rendering into a coherent custom engine.
 
 ## My contribution
 
 - Implemented systems-level functionality across transforms, parent/child hierarchy and component lifecycle.
 - Worked on resource loading, custom memory structures, allocators / pools and runtime/editor integration.
-- Built editor functionality with Dear ImGui, including hierarchy, inspector, component editing, shader controls, lighting toggles and audio playback controls.
+- Built editor tools with Dear ImGui, including hierarchy, inspector, component editing, shader controls, lighting toggles and audio playback controls.
 - Contributed to OpenGL rendering, specifically normal mapping and lighting implementation.
-- Integrated third-party libraries while maintaining a custom architecture.
+- Integrated third-party libraries such as GLFW, GLEW, Dear ImGui, px_sched, stb_image, SoLoud and tinyobjloader while maintaining a custom architecture.
 
 ## Technical focus
 
-The project is useful as a technical case study because it demonstrates systems thinking: the code was not just rendering an object, it needed to manage entities, components, resources, editor state and runtime behaviour in a coherent way.
+This case study shows lower-level engineering beyond commercial engine usage: architecture, data ownership, component lifecycle, editor/runtime boundaries, resource management and rendering integration. It is the clearest counterweight to the assumption that my work is limited to Unity or gameplay scripting.

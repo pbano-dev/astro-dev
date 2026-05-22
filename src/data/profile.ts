@@ -1,24 +1,24 @@
 export const profile = {
   name: "Pablo Bano Benito",
   displayName: "Pablo Bañó Benito",
-  headline: "Software Engineer · C# / Unity Systems · Maintainable Architecture",
-  shortHeadline: "C# / Unity Systems Engineer",
+  headline: "Software Engineer · C# / C++ · Systems & Tools",
+  shortHeadline: "Software Engineer · C# / C++",
   location: "Spain · Remote only · EU work authorization",
   availability: "Immediate availability",
   email: "pablo.bano.benito@gmail.com",
   cvUrl: "/assets/cv/Pablo_Bano_Benito_CV.pdf",
   intro:
-    "Software engineer with 4+ years of professional C#/Unity experience building production systems, internal tools and gameplay/runtime features. Comfortable turning ambiguous requirements into reliable, reviewable software across games, tools, simulation and interactive products.",
+    "Software engineer with 4+ years of professional C# experience building production systems, internal tools and runtime features. My strongest work sits at the boundary between product requirements and robust implementation: modular architecture, debugging, refactoring, performance investigation and cross-disciplinary collaboration. I also bring C++ engine, rendering and simulation projects that show lower-level systems thinking beyond commercial engine workflows.",
   focus: [
-    "Maintainable C# architecture",
-    "Unity runtime systems",
-    "Gameplay tooling & debugging",
-    "Production support & refactoring",
+    "Maintainable C# systems",
+    "C++ engine architecture",
+    "Tools, debugging & iteration",
+    "Runtime performance & production support",
   ],
   stats: [
-    { value: "4+", label: "years professional C#/Unity" },
-    { value: "Unity 6", label: "production environment" },
-    { value: "Remote", label: "EU work authorization" },
+    { value: "4+", label: "years professional C# engineering" },
+    { value: "C# / C++", label: "systems, tools and runtime code" },
+    { value: "Remote", label: "Spain · EU work authorization" },
   ],
   links: [
     { label: "Email", href: "mailto:pablo.bano.benito@gmail.com" },
@@ -29,36 +29,38 @@ export const profile = {
 
 export const experience = [
   {
-    role: "Software Engineer - C# / Unity Systems",
+    role: "Software Engineer - C# Systems & Tools",
     company: "No Brakes Games · Human Fall Flat 2",
     period: "May 2022 — Sep 2025",
     description:
-      "Professional C# development in a production Unity 6 environment with modular architecture, tooling, debugging and cross-functional collaboration.",
+      "Professional C# engineering in a production environment, covering modular runtime systems, internal tools, debugging, feature support and cross-functional collaboration on a multiplayer physics-driven title.",
     bullets: [
-      "Designed and implemented maintainable C# systems for gameplay, tooling, debugging and runtime behaviour.",
-      "Built package-based architecture using assemblies, internal packages, ScriptableObjects, Prefabs and Addressables.",
-      "Created internal tools and debug utilities used by designers, QA and other disciplines during feature iteration.",
-      "Improved runtime behaviour through refactoring, profiling-driven investigation and memory / GC optimization.",
+      "Designed and implemented maintainable C# systems for runtime behaviour, gameplay interactions, tooling and debugging in Unity 6.",
+      "Built modular architecture using assemblies, internal packages, reusable components, ScriptableObjects, Prefabs and Addressables.",
+      "Translated ambiguous production and design requirements into reviewable, testable software features and debug utilities.",
+      "Worked with proprietary multiplayer technology, physics-driven systems, FMOD integration and event-driven gameplay workflows.",
+      "Improved code quality and runtime behaviour through refactoring, profiling-driven investigation and memory / GC optimization.",
+      "Collaborated through Git pull requests, code reviews, Jira workflows, QA reproduction and cross-disciplinary production meetings.",
     ],
   },
 ];
 
 export const skillGroups = [
   {
-    title: "Core engineering",
-    items: ["C#", "Maintainable architecture", "Debugging", "Refactoring", "Code review", "Production support"],
+    title: "Languages & core engineering",
+    items: ["C#", "C++", "C", "Lua", "JavaScript exposure", "Python scripting", "Debugging", "Refactoring"],
   },
   {
-    title: "Engines & frameworks",
-    items: ["Unity 6", "Custom C++ engines", "Unreal Engine 4", "ECS exposure", "Component systems"],
+    title: "Architecture & runtime systems",
+    items: ["Modular architecture", "Component systems", "ECS exposure", "Resource management", "Event-driven workflows", "Memory / GC optimization"],
   },
   {
-    title: "Runtime systems",
-    items: ["Packages", "Assemblies", "Addressables", "ScriptableObjects", "Prefabs", "Event-driven workflows"],
+    title: "Production workflow",
+    items: ["Git", "Pull requests", "Code review", "Jira", "TeamCity", "QA support", "Cross-functional collaboration"],
   },
   {
-    title: "Tools & graphics",
-    items: ["Git", "Jira", "TeamCity", "FMOD", "OpenGL", "Vulkan", "Dear ImGui", "SoLoud"],
+    title: "Engines, tools & media",
+    items: ["Unity 6", "Custom C++ engines", "Unreal Engine 4", "OpenGL", "Vulkan", "Dear ImGui", "FMOD", "SoLoud"],
   },
 ];
 

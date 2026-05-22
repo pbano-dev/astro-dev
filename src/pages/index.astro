@@ -30,7 +30,7 @@ const secondaryProjects = featuredProjects.slice(1, 4);
 
       <p class="text-sm font-bold uppercase tracking-[0.35em] text-cyan-300">{profile.shortHeadline}</p>
       <h1 class="mt-5 max-w-4xl text-5xl font-black tracking-[-0.07em] text-white sm:text-6xl lg:text-7xl">
-        Production-minded engineering for gameplay, tools and runtime systems.
+        C# and C++ engineering for reliable systems, tools and interactive software.
       </h1>
       <p class="mt-7 max-w-2xl text-lg leading-8 text-slate-300">
         {profile.intro}
@@ -81,8 +81,8 @@ const secondaryProjects = featuredProjects.slice(1, 4);
   <section class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
     <SectionHeading
       eyebrow="Selected work"
-      title="Portfolio rebuilt around systems, impact and technical ownership."
-      description="The old blog-style list has been replaced by case-study cards, stronger hierarchy, metadata, calls to action and project pages designed for recruiters and technical reviewers."
+      title="Selected work across C#, C++, engine architecture and interactive systems."
+      description="A focused selection of production, engine, graphics and tool projects. The emphasis is code ownership, architecture, debugging and technical trade-offs, not just game features."
     />
 
     {heroProject && <ProjectCard project={heroProject} large />}
@@ -96,7 +96,7 @@ const secondaryProjects = featuredProjects.slice(1, 4);
     <div class="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
       <div class="glass rounded-[2rem] p-7 sm:p-8">
         <p class="text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">Experience</p>
-        <h2 class="mt-4 text-3xl font-black tracking-tight text-white">Production Unity engineering</h2>
+        <h2 class="mt-4 text-3xl font-black tracking-tight text-white">Production C# engineering</h2>
         <p class="mt-4 leading-7 text-slate-400">{experience[0].description}</p>
         <div class="mt-7 rounded-3xl border border-white/10 bg-white/[0.035] p-5">
           <p class="text-lg font-bold text-white">{experience[0].role}</p>
@@ -124,8 +124,8 @@ const secondaryProjects = featuredProjects.slice(1, 4);
       <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
           <p class="text-xs font-bold uppercase tracking-[0.35em] text-emerald-300">Contact</p>
-          <h2 class="mt-4 text-4xl font-black tracking-tight text-white">Need a software engineer for games, tools or interactive products?</h2>
-          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">Available for remote roles across games, simulation, technical product teams, internal platforms and interactive software.</p>
+          <h2 class="mt-4 text-4xl font-black tracking-tight text-white">Need a C# / C++ software engineer for systems, tools or interactive products?</h2>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">Available for remote roles across software teams, games, simulation, internal platforms, tools and interactive products.</p>
         </div>
         <div class="flex flex-wrap gap-3">
           <a href={`mailto:${profile.email}`} class="rounded-full bg-white px-6 py-3 text-sm font-black text-slate-950 transition hover:bg-cyan-200">Email Pablo</a>

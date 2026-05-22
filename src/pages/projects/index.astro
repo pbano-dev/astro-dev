@@ -7,15 +7,19 @@ import { getCollection } from "astro:content";
 const projects = (await getCollection("projects")).sort(
   (a, b) => a.data.priority - b.data.priority
 );
-const filters = ["All", ...Array.from(new Set(projects.map((project) => project.data.type)))];
+const baseFilterOrder = ["Professional", "C#", "C++", "Engine", "Graphics", "Tool", "Simulation", "Game", "Mobile", "Unity", "Unreal"];
+const discoveredFilters = Array.from(
+  new Set(projects.flatMap((project) => [project.data.type, ...(project.data.tags ?? [])]))
+);
+const filters = ["All", ...baseFilterOrder.filter((filter) => discoveredFilters.includes(filter))];
 ---
 
 <BaseLayout title="Projects | Pablo Bano Benito">
   <section class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
     <SectionHeading
       eyebrow="Projects"
-      title="Case studies across Unity systems, gameplay, engines and rendering."
-      description="Filter by project type or open each case study for responsibilities, technical highlights, media and links."
+      title="C#, C++, systems, tools and interactive engineering case studies."
+      description="Filter by technical area or open each case study for responsibilities, constraints, technical highlights, media and links."
     />
 
     <div class="mb-8 flex flex-wrap gap-3" role="list" aria-label="Project filters">
@@ -49,7 +53,8 @@ const filters = ["All", ...Array.from(new Set(projects.map((project) => project.
           item.setAttribute('aria-pressed', String(active));
         });
         cards.forEach((card) => {
-          const visible = filter === 'All' || card.getAttribute('data-type') === filter;
+          const cardFilters = (card.getAttribute('data-filters') || '').split('|');
+          const visible = filter === 'All' || cardFilters.includes(filter);
           card.style.display = visible ? '' : 'none';
         });
       });
