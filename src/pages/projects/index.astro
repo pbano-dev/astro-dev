@@ -3,47 +3,24 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import SectionHeading from "../../components/SectionHeading.astro";
 import { getCollection } from "astro:content";
-
-const projects = (await getCollection("projects")).sort(
-  (a, b) => a.data.priority - b.data.priority
-);
-const baseFilterOrder = ["Professional", "C#", "C++", "Engine", "Graphics", "Tool", "Simulation", "Game", "Mobile", "Unity", "Unreal"];
-const discoveredFilters = Array.from(
-  new Set(projects.flatMap((project) => [project.data.type, ...(project.data.tags ?? [])]))
-);
+const projects = (await getCollection("projects")).sort((a, b) => a.data.priority - b.data.priority);
+const baseFilterOrder = ["Professional", "Engine", "C#", "C++", "Tool", "Game", "Unity", "Unreal", "Graphics", "Simulation", "Mobile"];
+const discoveredFilters = Array.from(new Set(projects.flatMap((project) => [project.data.type, ...(project.data.tags ?? [])])));
 const filters = ["All", ...baseFilterOrder.filter((filter) => discoveredFilters.includes(filter))];
 ---
-
-<BaseLayout title="Projects | Pablo Bano Benito">
+<BaseLayout title="Selected work | Pablo Bano Benito">
   <section class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
-    <SectionHeading
-      eyebrow="Projects"
-      title="C#, C++, systems, tools and interactive engineering case studies."
-      description="Filter by technical area or open each case study for responsibilities, constraints, technical highlights, media and links."
-    />
-
+    <SectionHeading eyebrow="Selected work" title="Project snapshots, with deeper technical breakdowns below." description="The strongest projects are ordered by professional signal: Human Fall Flat 2 for production C# ownership, SufferEngine for C++ systems architecture, and Oona for released Unreal/C++ team delivery." />
     <div class="mb-8 flex flex-wrap gap-3" role="list" aria-label="Project filters">
       {filters.map((filter, index) => (
-        <button
-          class="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-slate-300 transition hover:border-cyan-300/40 hover:text-white data-[active=true]:border-cyan-300/60 data-[active=true]:bg-cyan-300/15 data-[active=true]:text-cyan-100"
-          data-filter={filter}
-          data-active={index === 0 ? "true" : "false"}
-          aria-pressed={index === 0 ? "true" : "false"}
-        >
-          {filter}
-        </button>
+        <button class="rounded-full border border-slate-900/10 bg-white/55 px-4 py-2 text-sm font-bold text-slate-700 transition hover:border-teal-700/40 data-[active=true]:border-teal-700/50 data-[active=true]:bg-teal-700 data-[active=true]:text-white" data-filter={filter} data-active={index === 0 ? "true" : "false"} aria-pressed={index === 0 ? "true" : "false"}>{filter}</button>
       ))}
     </div>
-
-    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-      {projects.map((project) => <ProjectCard project={project} />)}
-    </div>
+    <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">{projects.map((project) => <ProjectCard project={project} />)}</div>
   </section>
-
   <script is:inline>
     const buttons = Array.from(document.querySelectorAll('[data-filter]'));
     const cards = Array.from(document.querySelectorAll('[data-project-card]'));
-
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         const filter = button.getAttribute('data-filter');
@@ -54,8 +31,8 @@ const filters = ["All", ...baseFilterOrder.filter((filter) => discoveredFilters.
         });
         cards.forEach((card) => {
           const cardFilters = (card.getAttribute('data-filters') || '').split('|');
-          const visible = filter === 'All' || cardFilters.includes(filter);
-          card.style.display = visible ? '' : 'none';
+          const show = filter === 'All' || cardFilters.includes(filter);
+          card.style.display = show ? '' : 'none';
         });
       });
     });

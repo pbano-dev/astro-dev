@@ -3,133 +3,104 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import SectionHeading from "../components/SectionHeading.astro";
 import { getCollection } from "astro:content";
-import { profile, experience, skillGroups } from "../data/profile";
-
-const projects = (await getCollection("projects")).sort(
-  (a, b) => a.data.priority - b.data.priority
-);
+import { profile, experience, recruiterSignals, technicalSignals, roleFits, skillGroups } from "../data/profile";
+const projects = (await getCollection("projects")).sort((a, b) => a.data.priority - b.data.priority);
 const featuredProjects = projects.filter((project) => project.data.featured);
 const heroProject = featuredProjects[0];
 const secondaryProjects = featuredProjects.slice(1, 4);
+const primaryRoleFits = roleFits.filter((roleFit) => !roleFit.name.toLowerCase().includes(".net"));
+const dotnetTransition = roleFits.find((roleFit) => roleFit.name.toLowerCase().includes(".net"));
 ---
-
-<BaseLayout
-  title={`${profile.displayName} | ${profile.headline}`}
-  description={profile.intro}
->
-  <section class="relative mx-auto grid max-w-7xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[0.95fr_1.05fr] lg:py-24">
-    <div class="flex flex-col justify-center">
+<BaseLayout title={`${profile.displayName} | ${profile.headline}`} description={profile.recruiterPitch}>
+  <section class="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:px-8 lg:grid-cols-[1.08fr_0.92fr] lg:py-20">
+    <div>
       <div class="mb-6 flex flex-wrap gap-3">
-        <span class="rounded-full border border-emerald-300/30 bg-emerald-300/10 px-4 py-2 text-sm font-semibold text-emerald-100">
-          {profile.availability}
-        </span>
-        <span class="rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-slate-300">
-          {profile.location}
-        </span>
+        <span class="rounded-full bg-slate-950 px-4 py-2 text-sm font-black text-white">Remote-only</span>
       </div>
-
-      <p class="text-sm font-bold uppercase tracking-[0.35em] text-cyan-300">{profile.shortHeadline}</p>
-      <h1 class="mt-5 max-w-4xl text-5xl font-black tracking-[-0.07em] text-white sm:text-6xl lg:text-7xl">
-        C# and C++ engineering for reliable systems, tools and interactive software.
+      <p class="kicker">{profile.positioning}</p>
+      <h1 class="mt-5 max-w-5xl text-5xl font-black tracking-[-0.075em] text-slate-950 sm:text-6xl lg:text-7xl">
+        C# / C++ software engineer focused on systems, tools and runtime architecture.
       </h1>
-      <p class="mt-7 max-w-2xl text-lg leading-8 text-slate-300">
-        {profile.intro}
-      </p>
-
+      <p class="mt-7 max-w-3xl text-xl leading-9 text-slate-700">{profile.recruiterPitch}</p>
       <div class="mt-9 flex flex-wrap gap-4">
-        <a href="/projects" class="rounded-full bg-cyan-300 px-6 py-3 text-sm font-black text-slate-950 shadow-[0_0_40px_rgba(34,211,238,0.28)] transition hover:bg-white">
-          Explore projects
-        </a>
-        <a href={profile.cvUrl} class="rounded-full border border-white/15 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/35 hover:bg-white/[0.08]">
-          Download CV
-        </a>
+        <a href="/projects" class="rounded-full bg-teal-700 px-6 py-3 text-sm font-black text-white shadow-xl shadow-teal-900/10 transition hover:bg-slate-950">View selected work</a>
+        <a href={profile.cvUrl} class="rounded-full border border-slate-900/15 bg-white/60 px-6 py-3 text-sm font-black text-slate-950 transition hover:border-teal-700/40">Download CV</a>
+        <a href="/engineering-notes" class="rounded-full border border-slate-900/15 bg-white/60 px-6 py-3 text-sm font-black text-slate-950 transition hover:border-teal-700/40">Technical evidence</a>
       </div>
-
       <div class="mt-10 grid gap-3 sm:grid-cols-3">
-        {profile.stats.map((stat) => (
-          <div class="glass rounded-3xl p-4">
-            <p class="text-2xl font-black text-white">{stat.value}</p>
-            <p class="mt-1 text-xs leading-5 text-slate-400">{stat.label}</p>
+        {profile.stats.map((stat) => <div class="panel rounded-3xl p-5"><p class="text-3xl font-black text-slate-950">{stat.value}</p><p class="mt-2 text-sm leading-5 text-slate-600">{stat.label}</p></div>)}
+      </div>
+    </div>
+    <aside class="panel-dark rounded-[2.3rem] p-6 sm:p-8">
+      <p class="text-xs font-black uppercase tracking-[0.28em] text-teal-200">First 20 seconds</p>
+      <h2 class="mt-4 text-3xl font-black tracking-tight text-white">Fast signal. Deeper evidence below.</h2>
+      <div class="mt-6 grid gap-4">
+        {recruiterSignals.map((block) => (
+          <div class="rounded-3xl border border-white/10 bg-white/[0.06] p-5">
+            <h3 class="font-black text-white">{block.title}</h3>
+            <ul class="mt-3 grid gap-2 text-sm text-slate-300">
+              {block.items.map((item) => <li>• {item}</li>)}
+            </ul>
           </div>
         ))}
       </div>
-    </div>
-
-    <div class="relative">
-      <div class="absolute -inset-4 rounded-[3rem] bg-cyan-300/10 blur-3xl"></div>
-      <div class="glass relative overflow-hidden rounded-[2.5rem] p-5">
-        <div class="flex items-center justify-between border-b border-white/10 pb-4">
-          <div class="flex gap-2">
-            <span class="size-3 rounded-full bg-red-400"></span>
-            <span class="size-3 rounded-full bg-yellow-300"></span>
-            <span class="size-3 rounded-full bg-emerald-400"></span>
-          </div>
-          <span class="text-xs text-slate-500">pbano.dev / systems</span>
-        </div>
-        <div class="grid gap-5 pt-5">
-          {profile.focus.map((item, index) => (
-            <div class="rounded-3xl border border-white/10 bg-white/[0.035] p-5">
-              <p class="text-xs font-bold uppercase tracking-[0.3em] text-slate-500">0{index + 1}</p>
-              <p class="mt-2 text-xl font-black text-white">{item}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
+    </aside>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
-    <SectionHeading
-      eyebrow="Selected work"
-      title="Selected work across C#, C++, engine architecture and interactive systems."
-      description="A focused selection of production, engine, graphics and tool projects. The emphasis is code ownership, architecture, debugging and technical trade-offs, not just game features."
-    />
-
+    <SectionHeading eyebrow="Selected work" title="Selected work with technical evidence." description="Human Fall Flat 2 shows production ownership. SufferEngine documents custom C++ engine architecture. Oona and Magoon add released/team project evidence across Unreal, C++ and Unity/C#." />
     {heroProject && <ProjectCard project={heroProject} large />}
-
-    <div class="mt-6 grid gap-6 lg:grid-cols-3">
-      {secondaryProjects.map((project) => <ProjectCard project={project} />)}
-    </div>
+    <div class="mt-6 grid gap-6 md:grid-cols-2 xl:grid-cols-3">{secondaryProjects.map((project) => <ProjectCard project={project} />)}</div>
   </section>
 
-  <section class="mx-auto max-w-7xl px-5 py-16 sm:px-8">
-    <div class="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
-      <div class="glass rounded-[2rem] p-7 sm:p-8">
-        <p class="text-xs font-bold uppercase tracking-[0.35em] text-cyan-300">Experience</p>
-        <h2 class="mt-4 text-3xl font-black tracking-tight text-white">Production C# engineering</h2>
-        <p class="mt-4 leading-7 text-slate-400">{experience[0].description}</p>
-        <div class="mt-7 rounded-3xl border border-white/10 bg-white/[0.035] p-5">
-          <p class="text-lg font-bold text-white">{experience[0].role}</p>
-          <p class="mt-1 text-sm text-slate-400">{experience[0].company} · {experience[0].period}</p>
+  <section class="mx-auto max-w-7xl px-5 py-14 sm:px-8">
+    <div class="grid gap-6 lg:grid-cols-[0.9fr_1.1fr]">
+      <div class="panel rounded-[2rem] p-7 sm:p-8">
+        <p class="kicker">Professional evidence</p>
+        <h2 class="mt-4 text-4xl font-black tracking-[-0.055em] text-slate-950">Production C# engineering with feature ownership.</h2>
+        <p class="mt-4 leading-7 text-slate-700">{experience[0].description}</p>
+        <div class="mt-7 rounded-3xl border border-slate-900/10 bg-white/55 p-5">
+          <p class="text-lg font-black text-slate-950">{experience[0].role}</p>
+          <p class="mt-1 text-sm text-slate-600">{experience[0].company} · {experience[0].period}</p>
         </div>
       </div>
-
       <div class="grid gap-4 sm:grid-cols-2">
-        {skillGroups.map((group) => (
-          <div class="glass rounded-[2rem] p-6">
-            <h3 class="text-lg font-bold text-white">{group.title}</h3>
-            <div class="mt-4 flex flex-wrap gap-2">
-              {group.items.map((item) => (
-                <span class="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs text-slate-300">{item}</span>
-              ))}
-            </div>
-          </div>
+        {technicalSignals.map((signal) => (
+          <article class="panel rounded-[2rem] p-6">
+            <h3 class="text-lg font-black text-slate-950">{signal.title}</h3>
+            <p class="mt-4 text-sm leading-6 text-slate-600">{signal.description}</p>
+          </article>
         ))}
       </div>
     </div>
   </section>
 
   <section class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
-    <div class="glass rounded-[2.5rem] p-8 sm:p-10 lg:p-12">
+    <SectionHeading eyebrow="Role fit" title="Role fit, backed by evidence." description="Different roles emphasize different parts of the same profile: production C# ownership, custom C++ engine architecture, tools, debugging and maintainable runtime systems." />
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {primaryRoleFits.map((variant) => <article class="panel rounded-[1.6rem] p-5"><h3 class="font-black text-slate-950">{variant.name}</h3><p class="mt-3 text-sm leading-6 text-slate-600">{variant.use}</p><p class="mt-4 text-xs font-black uppercase tracking-[0.18em] text-teal-700">{variant.proof}</p></article>)}
+    </div>
+    {dotnetTransition && <p class="mt-5 max-w-3xl text-sm leading-6 text-slate-600"><strong class="text-slate-950">Also open to selected C#/.NET transition roles</strong> where systems, tooling and debugging experience are relevant. This is a secondary path, not the primary positioning.</p>}
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
+    <SectionHeading eyebrow="Skills" title="Prioritized by evidence, not keyword volume." description="The main signal is systems, tooling, debugging and maintainability. Graphics, AI and .NET appear only where the evidence supports them." />
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {skillGroups.map((group) => <div class="panel rounded-[2rem] p-6"><h3 class="text-lg font-black text-slate-950">{group.title}</h3><div class="mt-4 flex flex-wrap gap-2">{group.items.map((item) => <span class="tag">{item}</span>)}</div></div>)}
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 py-12 sm:px-8">
+    <div class="panel-dark rounded-[2.5rem] p-8 sm:p-10 lg:p-12">
       <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
         <div>
-          <p class="text-xs font-bold uppercase tracking-[0.35em] text-emerald-300">Contact</p>
-          <h2 class="mt-4 text-4xl font-black tracking-tight text-white">Need a C# / C++ software engineer for systems, tools or interactive products?</h2>
-          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">Available for remote roles across software teams, games, simulation, internal platforms, tools and interactive products.</p>
+          <p class="text-xs font-black uppercase tracking-[0.28em] text-teal-200">Contact</p>
+          <h2 class="mt-4 text-4xl font-black tracking-tight text-white">C# / C++ software engineering for systems, tools and interactive products.</h2>
+          <p class="mt-5 max-w-3xl text-lg leading-8 text-slate-300">Remote-only availability. Focused on maintainable software, architecture, debugging and production ownership.</p>
         </div>
         <div class="flex flex-wrap gap-3">
-          <a href={`mailto:${profile.email}`} class="rounded-full bg-white px-6 py-3 text-sm font-black text-slate-950 transition hover:bg-cyan-200">Email Pablo</a>
-          <a href="/contact" class="rounded-full border border-white/15 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/[0.08]">Contact page</a>
+          <a href={`mailto:${profile.email}`} class="rounded-full bg-white px-6 py-3 text-sm font-black text-slate-950 transition hover:bg-teal-100">Email Pablo</a>
+          <a href="/contact" class="rounded-full border border-white/15 px-6 py-3 text-sm font-bold text-white transition hover:bg-white/[0.08]">Contact page</a>
         </div>
       </div>
     </div>

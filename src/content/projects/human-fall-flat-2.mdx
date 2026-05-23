@@ -1,47 +1,54 @@
 ---
 title: "Human Fall Flat 2"
-subtitle: "Production C# systems, tools and runtime engineering for a multiplayer physics-driven title."
-summary: "Professional C# engineering in a production environment: modular architecture, runtime behaviour, debug tooling, proprietary multiplayer integration, FMOD/gameplay integration, profiling-driven fixes and milestone stabilization."
+subtitle: "Production C# systems, tools and runtime engineering for a multiplayer physics-driven Unity title."
+summary: "Professional C# engineering in a production environment: modular architecture, runtime behaviour, internal tools, proprietary multiplayer integration, FMOD/gameplay integration, profiling-driven fixes, QA verification and milestone stabilization. Details are intentionally NDA-safe."
 period: "2022 — 2025"
-role: "Software Engineer - C# Systems"
+role: "Programmer / Software Engineer"
 type: "Professional"
 tags:
   - C#
   - Game
   - Unity
   - Tool
-status: "Production title"
+status: "Professional production work"
 featured: true
 priority: 1
 tech:
   - C#
   - Unity 6
-  - Modular architecture
-  - Internal packages
-  - Assemblies
-  - Addressables
+  - Modular packages
+  - ScriptableObjects
+  - Internal tools
   - FMOD
   - Proprietary multiplayer
-  - Profiling
+  - Unity Profiler
+  - Memory Profiler
+  - TeamCity
+  - Jira
 cover: "/assets/projects/human-fall-flat-2/hff2_2.mp4"
 coverPoster: "/assets/projects/human-fall-flat-2/hff2_2-poster.webp"
 coverAlt: "Human Fall Flat 2 gameplay preview"
 accent: "#22d3ee"
 metrics:
-  - value: "4 yrs"
-    label: "professional C# engineering"
-  - value: "Cross-functional"
-    label: "QA, design, code review"
+  - value: "3+ yrs"
+    label: "full-time production C# engineering"
+  - value: "20-30"
+    label: "multidisciplinary team context"
+  - value: "100+"
+    label: "bugs/runtime issues fixed across milestones"
+  - value: "90%"
+    label: "approx. tasks owned end-to-end before review/QA"
 highlights:
-  - "Designed maintainable C# runtime systems, internal tools and debug utilities under production constraints."
-  - "Built modular architecture with assemblies, internal packages, reusable components, ScriptableObjects, Prefabs and Addressables."
-  - "Worked with proprietary multiplayer technology, physics-driven interactions, puzzle logic, event workflows and FMOD gameplay integration."
-  - "Supported milestone stabilization through bug reproduction, production fixes, QA collaboration and stakeholder communication."
-  - "Improved runtime behaviour through refactoring, profiling-driven investigation and memory / GC optimization."
+  - "Owned C# features from ambiguous requirements through architecture, implementation, self-testing, PR review, QA validation and production merge."
+  - "Built modular runtime systems and internal packages with interfaces, abstract classes, small scripts, ScriptableObject-driven configuration and isolated feature test scenes."
+  - "Created tools and workflows used by designers, audio and QA, including level-authoring utilities, timer/action workflows, validation scenes and runtime debug support."
+  - "Worked with proprietary multiplayer and physics-driven gameplay constraints while keeping public descriptions NDA-safe."
+  - "Used Unity Profiler, Memory Profiler and ProfilerMarkers to investigate runtime behaviour, GC, allocations, inner loops and frame-cost hotspots."
+  - "Supported milestone stabilization through TeamCity builds, Jira bugfixing, QA handoff, PR review, crash/freeze prioritization and cross-functional communication."
 links:
   - label: "Steam"
     href: "https://store.steampowered.com/app/1388550/Human_Fall_Flat_2/"
-  - label: "No Brakes Games"
+  - label: "NoBrakesGames"
     href: "https://nobrakesgames.com/"
 gallery:
   - src: "/assets/projects/human-fall-flat-2/hff2_2.mp4"
@@ -66,19 +73,58 @@ gallery:
     alt: "Human Fall Flat 2 - Steam 7"
 ---
 
-## Overview
+## Why this project matters
 
-Human Fall Flat 2 is the professional production project that best represents my C# software engineering experience. The portfolio angle here is broader than Unity or gameplay: it is about building maintainable runtime systems, internal tools and debug workflows that can survive iteration, review, QA pressure and milestone stabilization.
+Human Fall Flat 2 is the strongest evidence of my professional production experience. The value is not only that it is a Unity/C# title; it is that the work happened in a real multidisciplinary production environment with milestones, production locks, QA passes, pull requests, TeamCity builds, Jira bugs, code reviews and runtime constraints.
 
-## My contribution
+I describe the work here in NDA-safe terms. Some systems cannot be named publicly, but the engineering patterns are clear: modular feature packages, runtime systems, internal tools, debugging workflows, profiling and ownership from requirement clarification to production merge.
 
-- Designed and implemented C# systems for runtime behaviour, tools, debugging and gameplay-facing interactions.
-- Built modular code using assemblies, internal packages, reusable components, ScriptableObjects, Prefabs and Addressables.
-- Translated ambiguous production and design requirements into implemented, reviewable and testable software features.
-- Created internal tools and debug utilities used during iteration, QA investigation and bug fixing.
-- Worked with proprietary multiplayer technology, physics-driven features, event logic and FMOD gameplay integration.
-- Participated in Git pull requests, code reviews, Jira workflows and cross-functional discussions with programmers, designers, QA, audio and production.
+## Production context
 
-## Technical focus
+The project was a multiplayer, physics-driven Unity 6 title developed by a 20-30 person team. Work was organized around milestones, typically followed by production lock, bug-fixing/stabilization, large QA test passes, merge into the production branch and build verification.
 
-The key story is maintainability under production constraints. I worked on code that needed to be readable, reviewable, debuggable and safe to iterate on across disciplines. That included architectural decisions, feature-level ownership, debug tooling, bug reproduction, profiling-driven fixes and memory / GC optimization where appropriate, while respecting NDA boundaries around unreleased production details.
+My role evolved from Junior Programmer to Programmer. Most assigned work was individually owned: I was responsible for the feature or fix, but the code still went through PR review, programming feedback, QA validation and production constraints.
+
+## Systems and tools, NDA-safe
+
+Publicly safe categories of work include:
+
+- modular gameplay/runtime systems built as independent packages.
+- designer-facing level-authoring and validation utilities.
+- runtime timing/action workflows to reduce ad-hoc coroutine-style logic.
+- level-scoped audio loading and audio-positioning workflows.
+- physics-driven gameplay interactions and object-response systems.
+- component-based data capture/serialization workflows.
+- feature-specific test scenes and logs for validation.
+- multiplayer-sensitive debugging where host/client output had to be compared frame-by-frame.
+
+The important signal is not the exact feature names. It is that these were systems with ownership, constraints, users inside the team and production review.
+
+## Architecture and maintainability
+
+My approach was to avoid monolithic feature code. Systems were usually split into small scripts/classes, packaged independently when possible and configured through data containers such as ScriptableObjects. Where behaviour needed extension points, interfaces or abstract classes were used so objects could implement their own response without hard-wiring every case into one central script.
+
+A recurring design principle was: if a system might change because gameplay, physics, level design or production constraints change, avoid direct coupling to a single specific content case.
+
+## Debugging and runtime behaviour
+
+Debugging work included multiplayer divergence, physics-ordering edge cases, crash/freeze investigations and runtime behaviour problems. Two representative NDA-safe examples:
+
+- A multiplayer interaction produced different visual output on host and clients. The debugging path was to compare host/client runtime data in the same frame, isolate the divergent calculation and fix an incorrect vector/normal result on the client side.
+- A physics-driven interaction was not deterministic enough between repeated runs. Investigation showed that a physics query returned unordered results, so the result set needed explicit ordering before applying game logic.
+
+For performance, profiling was part of feature development. I used Unity Profiler, Memory Profiler and ProfilerMarkers to inspect total cost, call counts, GC, allocations, memory and inner loops. When relevant, optimizations included object/list reuse, reducing allocations, splitting work across frames, parallelizing calculation-heavy work and using task scheduling.
+
+## Testing and verification
+
+Verification was not limited to “it works on my machine”. Depending on the feature, testing included unit tests, integration tests, playmode tests, editor tests, manual QA passes, feature-specific validation scenes, logs, assertions and local self-testing before handing the work to QA.
+
+Feature-specific scenes were especially valuable: they isolated a system from the full level, reduced noise, allowed repeatable reproduction and made it easier to see whether a change had introduced regressions.
+
+## Collaboration and ownership
+
+The normal delivery path included requirement clarification, breaking ambiguous features into smaller tasks, investigation, architecture, implementation, self-testing, TeamCity builds, pull request review, code review discussion, QA validation and final merge. PR discussion often continued in Slack or weekly code reviews where programmers presented problems, solutions and trade-offs.
+
+## Professional takeaway
+
+This project proves production engineering maturity: not just writing C# scripts, but owning runtime systems under real constraints, debugging difficult state-dependent issues, building tools for other disciplines, working through review and QA, and keeping software maintainable in a large interactive product.

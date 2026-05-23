@@ -18,6 +18,14 @@ const galleryItemSchema = z.object({
   poster: z.string().optional(),
 });
 
+const badgeSchema = z.object({
+  src: z.string(),
+  alt: z.string(),
+  href: z.string().optional(),
+  label: z.string().optional(),
+  variant: z.enum(["button", "badge"]).default("badge"),
+});
+
 const projects = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/projects" }),
   schema: z.object({
@@ -50,6 +58,7 @@ const projects = defineCollection({
     highlights: z.array(z.string()).default([]),
     links: z.array(linkSchema).default([]),
     videoId: z.string().optional(),
+    badges: z.array(badgeSchema).default([]),
     gallery: z.array(galleryItemSchema).default([]),
   }),
 });

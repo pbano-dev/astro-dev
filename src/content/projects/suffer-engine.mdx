@@ -1,41 +1,51 @@
 ---
 title: "SufferEngine"
-subtitle: "Custom C++ / OpenGL engine with ECS, task scheduling, editor tooling and resource management."
-summary: "A custom C++ engine co-developed from scratch, covering real ECS architecture, transform hierarchy, Lua scripting components, resource management, allocators / pools, editor tooling and OpenGL rendering features."
-period: "2021"
-role: "C++ Engine Programmer"
+subtitle: "Private custom C++ real-time engine: runtime architecture, editor tooling, rendering, scripting, audio and Linux packaging."
+summary: "A proprietary C++ engine project used as a systems-heavy case study. It demonstrates ECS-style architecture, EngineManager orchestration, Scene/GameObject/Component/System organization, DisplayList/Command render flow, OpenGL resources, Dear ImGui editor tooling, Lua scripting, SoLoud audio, diagnostics and Linux/AppImage hardening without exposing private source code."
+period: "2021 — private enhanced version"
+role: "C++ Engine / Systems Programmer"
 type: "Engine"
 tags:
   - C++
   - Tool
   - Graphics
-status: "Technical project"
+status: "Private technical case study"
 featured: true
 priority: 2
 tech:
   - C++
   - OpenGL
-  - ECS
-  - Task scheduler
-  - Dear ImGui
-  - Lua
-  - SoLoud
+  - CMake
+  - ECS-style architecture
+  - Command pattern
   - Resource management
+  - Dear ImGui
+  - Lua scripting
+  - SoLoud audio
+  - Framebuffers
+  - Shadow mapping
+  - Post-processing
+  - AppImage packaging
 cover: "/assets/projects/suffer-engine/lights.mp4"
 coverPoster: "/assets/projects/suffer-engine/lights-poster.webp"
 coverAlt: "SufferEngine animated lighting and editor preview"
 accent: "#a78bfa"
 metrics:
-  - value: "Real ECS"
-    label: "custom component model"
-  - value: "Task scheduler"
-    label: "multithreaded systems"
+  - value: "Custom C++"
+    label: "engine/runtime architecture"
+  - value: "Runtime + editor"
+    label: "scene, tools and render pipeline"
+  - value: "Private"
+    label: "source-safe public case study"
+  - value: "Linux"
+    label: "CMake/AppImage hardening"
 highlights:
-  - "Implemented systems-level functionality across transforms, parent/child hierarchy, component lifecycle and runtime/editor integration."
-  - "Worked with a real ECS architecture, task scheduler, Lua scripting components, audio execution and resource management."
-  - "Built editor functionality with Dear ImGui: hierarchy, inspector, component editing, shader controls, lighting toggles and audio controls."
-  - "Worked on custom memory structures, allocators / pools and resource loading."
-  - "Contributed to OpenGL rendering, specifically normal mapping and lighting implementation."
+  - "Architecture organized around EngineManager, Scene, GameObject, Components, Systems, DisplayLists and Commands."
+  - "Engine modules cover resource management, OpenGL rendering, framebuffers, shadow passes, post-processing, Lua scripting, SoLoud audio and Dear ImGui editor tooling."
+  - "ResourceManager separates logical resources from GPU-side data and synchronizes buffers, textures, cubemaps, framebuffers and shaders."
+  - "Render flow uses command/list submission: systems generate work, RenderManager executes commands against OpenGL resources."
+  - "Linux work includes CMake build support, sanitizer/GDB scripts, OpenGL diagnostics and AppImage runtime-only packaging."
+  - "Presented honestly as a private technical case study, not as a commercial or production-grade engine."
 links:
   - label: "Video"
     href: "https://www.youtube.com/watch?v=orxBeejDP1Q"
@@ -53,18 +63,84 @@ gallery:
     alt: "SufferEngine editor and scene screenshot"
 ---
 
-## Overview
+## Why this project matters
 
-SufferEngine is the strongest C++ systems project in the portfolio. It was not a simple rendering demo: it combined runtime architecture, an entity/component model, transform hierarchy, scripting, audio execution, resource management, editor tooling and rendering into a coherent custom engine.
+SufferEngine is the strongest C++ systems project in my portfolio. It is not positioned as a commercial engine or a pure graphics demo. Its value is architectural: it shows that I can reason about engine-level organization, runtime loops, resource ownership, rendering commands, editor tooling, scripting, audio, platform issues and packaging.
 
-## My contribution
+The source code remains private, so this page documents the system without exposing implementation details. The goal is to communicate what exists, how it is organized and which engineering problems it demonstrates.
 
-- Implemented systems-level functionality across transforms, parent/child hierarchy and component lifecycle.
-- Worked on resource loading, custom memory structures, allocators / pools and runtime/editor integration.
-- Built editor tools with Dear ImGui, including hierarchy, inspector, component editing, shader controls, lighting toggles and audio playback controls.
-- Contributed to OpenGL rendering, specifically normal mapping and lighting implementation.
-- Integrated third-party libraries such as GLFW, GLEW, Dear ImGui, px_sched, stb_image, SoLoud and tinyobjloader while maintaining a custom architecture.
+## High-level architecture
 
-## Technical focus
+The engine is organized around a central `Manager` that owns the main loop and coordinates the main subsystems:
 
-This case study shows lower-level engineering beyond commercial engine usage: architecture, data ownership, component lifecycle, editor/runtime boundaries, resource management and rendering integration. It is the clearest counterweight to the assumption that my work is limited to Unity or gameplay scripting.
+- Window/Input and OpenGL context.
+- Scene management.
+- Resource management.
+- Rendering.
+- Audio.
+- Lighting.
+- Dear ImGui editor interface.
+- Systems for transform, hierarchy, script, light, audio and render.
+
+A simplified view:
+
+```text
+Application demo
+  -> EngineManager
+    -> Window / Input / Interface
+    -> Scene
+       -> GameObject
+          -> Transform / Geometry / Material / Script / Light / Audio / Child components
+    -> Systems
+       -> Transform / Hierarchy / Script / Light / Audio / Render
+    -> DisplayList / Commands
+       -> RenderManager / AudioManager
+    -> ResourceManager
+       -> buffers / textures / cubemaps / framebuffers / shaders
+```
+
+## Runtime model
+
+The project uses an ECS-style model rather than a data-oriented ECS. Scene objects are composed from components, and systems iterate over those objects to perform work. This demonstrates separation of concerns — object data, behaviour systems, rendering commands and resources — while still being honest about the trade-off: it is flexible and readable, but not designed as a cache-friendly archetype ECS.
+
+## Render and resource flow
+
+The renderer is built around a command/list style flow. Systems generate display lists containing commands such as geometry drawing, depth passes, shadow maps, point-light depth passes, skybox rendering and post-processing. The `RenderManager` executes those commands, while `ResourceManager` owns or synchronizes the data needed by OpenGL: vertex buffers, index buffers, textures, cubemaps, framebuffers and shader programs.
+
+This is the core professional signal: the project does not simply call drawing code directly from gameplay. It separates data, submission and execution into different responsibilities.
+
+## Editor tooling
+
+The editor layer uses Dear ImGui and includes practical runtime tools such as scene hierarchy, inspector-style panels, project browsing, game viewport, lighting/material controls and audio interaction. This turns the engine from a rendering sample into a small editor/runtime environment where scene state can be inspected and changed interactively.
+
+## Scripting and audio
+
+Lua scripting is integrated through a script component that exposes engine actions such as transforms, component changes, geometry/draw-mode changes and audio triggers. SoLoud is used for audio playback, including 3D audio concepts. These features show that the runtime is not only a renderer: objects can own behaviour, state and sound.
+
+## Linux hardening and packaging
+
+The enhanced version includes Linux/CMake build support, run scripts, sanitizer builds, GDB execution helpers, OpenGL diagnostics and AppImage packaging. A dedicated public packaging flow creates a runtime-only demo while excluding source code, headers, tests, dependencies, scripts and private build artifacts.
+
+This is important professionally because it shows platform and distribution thinking, not just feature implementation.
+
+## Technical trade-offs
+
+- **Global engine access vs explicit dependencies:** a central singleton-style engine object simplifies demos but increases coupling and reduces testability.
+- **Flexible component map vs data-oriented ECS:** easy to extend and inspect, but not ideal for cache-local performance.
+- **Command-based render flow vs direct calls:** cleaner separation, but more ownership and lifetime complexity.
+- **Runtime editor convenience vs strict runtime correctness:** editor tooling is useful, but it increases synchronization and state-management complexity.
+- **Relative asset paths vs robust runtime asset root:** quick to use during development, but fragile for packaging and distribution.
+
+## What I would improve next
+
+- Centralize runtime asset path resolution.
+- Separate demos/samples from real automated tests.
+- Add tests for resource handles, display-list ownership and component retrieval.
+- Reduce global engine access through explicit context passing.
+- Harden Lua scripting boundaries.
+- Add architecture diagrams and a public technical write-up.
+- Keep public packaging source-safe and repeatable.
+
+## Professional takeaway
+
+SufferEngine is the portfolio proof that I can go below engine-level APIs and reason about the structure of a runtime system: update order, object/component organization, resources, render commands, editor tools, scripting, audio, platform debugging and packaging. It is the best project for roles that care about C++, tools, engine-adjacent systems and maintainable low-level software.

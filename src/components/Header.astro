@@ -1,35 +1,75 @@
 ---
 import { profile } from "../data/profile";
 const nav = [
-  { href: "/projects", label: "Projects" },
-  { href: "/about", label: "About" },
+  { href: "/projects", label: "Work" },
+  { href: "/engineering-notes", label: "Evidence" },
+  { href: "/about", label: "Profile" },
   { href: "/contact", label: "Contact" },
 ];
 ---
-
-<header class="sticky top-0 z-50 border-b border-white/10 bg-slate-950/70 backdrop-blur-xl">
-  <div class="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8">
-    <a href="/" class="group flex items-center gap-3" aria-label={`${profile.displayName} home`}>
-      <span class="grid size-10 place-items-center rounded-2xl border border-cyan-300/30 bg-cyan-300/10 text-sm font-black text-cyan-100 shadow-[0_0_40px_rgba(34,211,238,0.16)]">
-        PB
-      </span>
-      <span class="hidden leading-tight sm:block">
-        <span class="block text-sm font-semibold text-white">{profile.displayName}</span>
-        <span class="block text-xs text-slate-400">{profile.shortHeadline}</span>
+<header class="site-header sticky top-0 z-50 border-b backdrop-blur-xl">
+  <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-4 sm:px-8">
+    <a href="/" class="flex min-w-0 items-center gap-3" aria-label={`${profile.displayName} home`}>
+      <span class="grid size-10 shrink-0 place-items-center rounded-full bg-slate-950 text-xs font-black text-white">PB</span>
+      <span class="hidden min-w-0 leading-tight sm:block">
+        <span class="block truncate text-sm font-black tracking-tight text-slate-950">{profile.displayName}</span>
+        <span class="block truncate text-xs text-slate-600">{profile.positioning}</span>
       </span>
     </a>
-
-    <nav class="hidden items-center gap-7 text-sm text-slate-300 md:flex" aria-label="Primary navigation">
-      {nav.map((item) => (
-        <a class="link-underline hover:text-white" href={item.href}>{item.label}</a>
-      ))}
+    <nav class="hidden items-center gap-7 text-sm font-semibold text-slate-700 md:flex" aria-label="Primary navigation">
+      {nav.map((item) => <a class="link-underline hover:text-slate-950" href={item.href}>{item.label}</a>)}
     </nav>
-
-    <a
-      href={`mailto:${profile.email}`}
-      class="rounded-full border border-white/10 bg-white/[0.05] px-4 py-2 text-sm font-medium text-white transition hover:border-cyan-300/40 hover:bg-cyan-300/10"
-    >
-      Email
-    </a>
+    <div class="flex items-center gap-2 sm:gap-3">
+      <select
+        id="language-toggle"
+        class="language-toggle inline-flex h-10 rounded-full px-3 text-sm font-black transition"
+        aria-label="Language"
+      >
+        <option value="en">EN</option>
+        <option value="es">ES</option>
+      </select>
+      <button
+        id="theme-toggle"
+        type="button"
+        class="theme-toggle inline-flex h-10 items-center gap-2 rounded-full px-3 text-sm font-bold transition sm:px-4"
+        aria-label="Toggle color theme"
+        aria-pressed="true"
+      >
+        <span data-theme-icon aria-hidden="true">☀️</span>
+        <span class="hidden sm:inline" data-theme-label>Light</span>
+      </button>
+      <a href={profile.cvUrl} class="hidden rounded-full bg-slate-950 px-4 py-2 text-sm font-bold text-white transition hover:bg-teal-700 sm:inline-flex">Download CV</a>
+    </div>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const button = document.getElementById("theme-toggle");
+    if (!button) return;
+
+    const label = button.querySelector("[data-theme-label]");
+    const icon = button.querySelector("[data-theme-icon]");
+
+    const applyState = () => {
+      const theme = document.documentElement.dataset.theme || "dark";
+      const lang = localStorage.getItem("language") || "en";
+      const isDark = theme === "dark";
+      button.setAttribute("aria-pressed", String(isDark));
+      button.setAttribute("aria-label", isDark ? (lang === "es" ? "Cambiar a modo claro" : "Switch to light mode") : (lang === "es" ? "Cambiar a modo oscuro" : "Switch to dark mode"));
+      if (label) label.textContent = isDark ? (lang === "es" ? "Claro" : "Light") : (lang === "es" ? "Oscuro" : "Dark");
+      if (icon) icon.textContent = isDark ? "☀️" : "🌙";
+    };
+
+    applyState();
+    button.addEventListener("click", () => {
+      const current = document.documentElement.dataset.theme || "dark";
+      const next = current === "dark" ? "light" : "dark";
+      document.documentElement.dataset.theme = next;
+      localStorage.setItem("theme", next);
+      applyState();
+    });
+
+    window.addEventListener("languagechange", applyState);
+  })();
+</script>

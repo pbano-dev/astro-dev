@@ -2,15 +2,10 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import { profile } from "../data/profile";
-
-const {
-  title = `${profile.displayName} | Software Engineer`,
-  description = profile.intro,
-} = Astro.props;
+const { title = `${profile.displayName} | Software Engineer`, description = profile.intro } = Astro.props;
 ---
-
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -21,23 +16,28 @@ const {
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
+    <script is:inline>
+      (() => {
+        const stored = localStorage.getItem("theme");
+        document.documentElement.dataset.theme = stored === "light" ? "light" : "dark";
+        const lang = localStorage.getItem("language");
+        document.documentElement.lang = lang === "es" ? "es" : "en";
+      })();
+    </script>
+    <script src="/i18n.js" defer></script>
   </head>
-  <body class="min-h-screen text-slate-100 antialiased">
+  <body class="min-h-screen antialiased">
     <Header />
-    <main>
-      <slot />
-    </main>
-    <footer class="relative mx-auto mt-24 max-w-7xl px-5 pb-10 sm:px-8">
-      <div class="glass rounded-[2rem] p-6 sm:p-8">
+    <main><slot /></main>
+    <footer class="mx-auto mt-20 max-w-7xl px-5 pb-10 sm:px-8">
+      <div class="panel rounded-[2rem] p-6 sm:p-8">
         <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p class="text-sm font-semibold text-white">{profile.displayName}</p>
-            <p class="mt-1 text-sm text-slate-400">{profile.headline}</p>
+            <p class="font-black text-slate-950">{profile.displayName}</p>
+            <p class="mt-1 text-sm text-slate-600">{profile.headline}</p>
           </div>
-          <div class="flex flex-wrap gap-3 text-sm text-slate-300">
-            {profile.links.map((link) => (
-              <a class="rounded-full border border-white/10 px-4 py-2 transition hover:border-cyan-300/40 hover:text-white" href={link.href}>{link.label}</a>
-            ))}
+          <div class="flex flex-wrap gap-3 text-sm font-semibold text-slate-700">
+            {profile.links.map((link) => <a class="rounded-full border border-slate-900/10 bg-white/45 px-4 py-2 hover:border-teal-700/40" href={link.href}>{link.label}</a>)}
           </div>
         </div>
       </div>
